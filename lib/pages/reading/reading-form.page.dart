@@ -95,6 +95,9 @@ class ReadingFormPage extends StatelessWidget {
                 onPressed: c.saveForm,
                 icon: const Icon(Icons.save),
                 label: const Text('บันทึก'),
+                style: FilledButton.styleFrom(
+                  minimumSize: const Size.fromHeight(48),
+                ),
               ),
             ],
           ),

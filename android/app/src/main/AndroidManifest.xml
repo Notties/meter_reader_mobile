@@ -3,7 +3,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="28" />
     <application
-        android:label="meter_reader_mobile"
+        android:label="Meter Reader"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

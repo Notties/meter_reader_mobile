@@ -49,4 +49,12 @@ class StorageService extends GetxService {
     await file.writeAsBytes(await src.readAsBytes());
     return file.path;
   }
+
+  Future<void> deleteImage(String path) async {
+    await ensureReady();
+    final file = File(path);
+    if (await file.exists()) {
+      await file.delete();
+    }
+  }
 }

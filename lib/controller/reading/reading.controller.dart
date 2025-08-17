@@ -3,12 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:meter_reader_mobile/app/core/routes/routes.path.dart';
+import 'package:meter_reader_mobile/controller/nav/nav.controller.dart';
 import 'package:meter_reader_mobile/models/reading/reading.model.dart';
 import 'package:meter_reader_mobile/services/storage.service.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class ReadingController extends GetxController {
   final storage = Get.find<StorageService>();
+  final nav = Get.find<NavController>();
 
   final items = <Reading>[].obs;
   final meterIdCtrl = TextEditingController();
@@ -71,11 +73,24 @@ class ReadingController extends GetxController {
     noteCtrl.clear();
     photoPath.value = null;
 
-    Get.until((route) => Get.currentRoute == RoutesPath.readingList);
+    nav.to(0); // Navigate to the first tab (home)
     Get.snackbar('บันทึกสำเร็จ', 'บันทึกการอ่านแล้ว');
   }
 
-  void openPhoto(String path) {
-    Get.toNamed(RoutesPath.photoPreview, arguments: {'path': path});
+  Future<void> deleteReading(String id) async {
+    final index = items.indexWhere((r) => r.id == id);
+    if (index != -1) {
+      final reading = items[index];
+      if (reading.photoPath != null) {
+        await storage.deleteImage(reading.photoPath!);
+      }
+      items.removeAt(index);
+      await storage.saveAll(items.toList());
+      Get.snackbar('ลบสำเร็จ', 'ลบการอ่านมิเตอร์แล้ว');
+    }
+  }
+
+  void openPhoto(Reading reading) {
+    Get.toNamed(RoutesPath.photoPreview, arguments: reading);
   }
 }

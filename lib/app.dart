@@ -10,10 +10,10 @@ class MeterReaderApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       title: 'Meter Reader',
-      debugShowCheckedModeBanner: false,
+      debugShowCheckedModeBanner: true,
       theme: ThemeData(useMaterial3: true, colorSchemeSeed: Colors.blue),
       getPages: RoutePages.pages,
-      initialRoute: RoutesPath.readingList,
+      initialRoute: RoutesPath.home,
     );
   }
 }

@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:meter_reader_mobile/app/core/routes/routes.path.dart';
 import 'package:meter_reader_mobile/controller/reading/reading.controller.dart';
 
 class ReadingListPage extends StatelessWidget {
@@ -11,7 +10,7 @@ class ReadingListPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final c = Get.find<ReadingController>();
     return Scaffold(
-      appBar: AppBar(title: const Text('MeterGo POC')),
+      appBar: AppBar(title: const Text('รายการบันทึกค่าน้ำ')),
       body: Obx(() {
         if (c.items.isEmpty) {
           return const Center(
@@ -35,19 +34,31 @@ class ReadingListPage extends StatelessWidget {
                       ),
                     )
                   : const Icon(Icons.photo_outlined),
-              title: Text('มิเตอร์: ${r.meterId}   ค่า: ${r.value}'),
+              title: Text('มิเตอร์: ${r.meterId}   ค่าน้ำ: ${r.value}'),
               subtitle: Text('${r.createdAt}'),
               onTap: () {
-                if (r.photoPath != null) c.openPhoto(r.photoPath!);
+                if (r.photoPath != null) c.openPhoto(r);
               },
+              trailing: IconButton(
+                icon: const Icon(Icons.delete),
+                onPressed: () {
+                  Get.defaultDialog(
+                    title: 'ยืนยันการลบ',
+                    middleText: 'คุณต้องการลบข้อมูลนี้หรือไม่?',
+                    textCancel: 'ยกเลิก',
+                    textConfirm: 'ลบ',
+                    confirmTextColor: Colors.white,
+                    onConfirm: () {
+                      Get.back();
+                      c.deleteReading(r.id);
+                    },
+                  );
+                },
+              ),
             );
           },
         );
       }),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => Get.toNamed(RoutesPath.readingForm),
-        child: const Icon(Icons.add),
-      ),
     );
   }
 }

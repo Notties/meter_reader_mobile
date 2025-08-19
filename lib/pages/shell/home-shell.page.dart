@@ -2,6 +2,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:meter_reader_mobile/controller/nav/nav.controller.dart';
+import 'package:meter_reader_mobile/pages/printer/printer-test.page.dart';
 import 'package:meter_reader_mobile/pages/reading/reading-form.page.dart';
 import 'package:meter_reader_mobile/pages/reading/reading-list.page.dart';
 import 'package:meter_reader_mobile/pages/user/user.page.dart';
@@ -12,7 +13,12 @@ class HomeShellPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final nav = Get.put(NavController(), permanent: true);
-    final pages = const [ReadingListPage(), ReadingFormPage(), UserPage()];
+    final pages = const [
+      ReadingListPage(),
+      ReadingFormPage(),
+      PrinterTestPage(),
+      UserPage(),
+    ];
 
     return Obx(() {
       return WillPopScope(
@@ -47,6 +53,11 @@ class HomeShellPage extends StatelessWidget {
                 icon: Icon(Icons.add_circle_outline),
                 activeIcon: Icon(Icons.add_circle),
                 label: 'เพิ่ม',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.print_outlined),
+                activeIcon: Icon(Icons.print),
+                label: 'ปริ้นเตอร์',
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.person_outline),
